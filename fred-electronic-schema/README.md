@@ -3,5 +3,5 @@
 </br>
 <p align="center">
 <img src="fred-arduino-schema.jpg" width="80%"> </br>
-<strong>Figure 1.</strong> FRED Robot - Arduino board Schema.
+<strong>Figure 1.</strong> FRED Robot - Arduino Board Schema
 </p>

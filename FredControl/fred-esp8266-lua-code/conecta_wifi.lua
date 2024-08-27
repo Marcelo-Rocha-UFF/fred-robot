@@ -30,8 +30,7 @@ mytimer:register(1000, tmr.ALARM_AUTO, function ()
             print("O End. MAC é " .. meu_mac)
             mytimer:unregister() -- libera o timer
             dofile("fred-webserver.lc") -- servidor web
-            dofile("fred-control-lua.lc") -- carregao firmware principal
-            
+            dofile("fred-control-lua.lc") -- carrega o firmware principal
     end
 end)
 
