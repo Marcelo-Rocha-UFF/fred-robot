@@ -1,10 +1,7 @@
 # FRED - Friendly Robot for EDucation and Healthcare
-
-This repository is about FRED robot.
-
-
+</br>
 <p align="center">
-<img src="fred.png" width="300"> </br>
-<strong>Figure 2.</strong> New expressions with a new design for the EVA robot.
+<img src="fred.png" width="220"> </br>
+<strong>Figure 1.</strong> FRED Robot - A Friendly Robot for EDucation and Healthcare.
 </p>
 </br>
