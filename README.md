@@ -6,5 +6,5 @@
 </p>
 </br>
 <p align="center">
-<img src="img-fred-arch.png" width="60%"> </br>
+<img src="img-fred-arch.png" width="60%"> </br></br>
 <strong>Figure 2.</strong> FRED Robot - Software Archtecture.
