@@ -5,7 +5,7 @@ A arquitetura de software do robô FRED pode ser dividida em duas camadas, de al
 
 </br>
 <p align="center">
-<img src="img-fred-arch-layers.jpg" width="55%"> </br></br>
+<img src="img-fred-arch-layers.jpg" width="45%"> </br></br>
 <strong>Figure 1.</strong> FRED Robot - Software Archtecture (LAYERS).
 </br></br></br>
 
@@ -13,7 +13,7 @@ The FRED firmware for the Arduino board depends on two libraries, **VarSpeedServ
 
 </br>
 <p align="center">
-<img src="img-libraries-folder.png" width="85%"> </br></br>
+<img src="img-libraries-folder.png" width="80%"> </br></br>
 <strong>Figure 2.</strong> Copying and uncompressing the libraries do the Arduino libraries folder.
 
 </br></br>
