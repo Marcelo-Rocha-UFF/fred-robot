@@ -13,3 +13,4 @@ The figure also shows the 4 servomotors with the indication of each one, whether
 <img src="fred-arduino-schema.png" width="80%"> </br>
 <strong>Figure 1.</strong> FRED Robot - Arduino Board Schema
 </p>
+
