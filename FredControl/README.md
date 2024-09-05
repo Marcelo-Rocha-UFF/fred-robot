@@ -1,7 +1,7 @@
 # FRED - Friendly Robot for EDucation and Healthcare
 ## FRED's Arduino Control Software
 
-A arquitetura de software do robô FRED pode ser dividida em duas camadas, de alto nível e de baixo nível. A camada de baixo nível é implementada nas placas Arduino UNO e ESP8266 (NodeMCU) que ficam dentro do robô. O software de controle dessa camada é dividido nessas duas placas. O software que roda na placa Arduino é o responsável pelo controle e pela comunicação com os atuadores do robô, como: as três matrizes de leds, que representam a expressão facial do robô, a fita de leds RGB no tórax do robô e os quatro servomotores que compõem as pernas e os pés do FRED.
+The software architecture of the FRED robot can be divided into two layers, high-level and low-level. The low-level layer is implemented on the Arduino UNO and ESP8266 (NodeMCU) boards inside the robot. The control software for this layer is divided into these two boards. The software running on the Arduino board is responsible for controlling and communicating with the robot's actuators, such as: the three LED arrays that represent the robot's facial expression, the RGB LED strip on the robot's chest, and the four servomotors that make up FRED's legs and feet.
 
 </br>
 <p align="center">
