@@ -5,4 +5,4 @@ A arquitetura de software do robô FRED pode ser dividida em duas camadas, de al
 </br></br>
 <p align="center">
 <img src="img-fred-arch-layers.jpg" width="55%"> </br></br>
-<strong>Figure 2.</strong> FRED Robot - Software Archtecture (LAYERS).
+<strong>Figure 1.</strong> FRED Robot - Software Archtecture (LAYERS).
