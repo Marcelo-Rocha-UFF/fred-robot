@@ -4,7 +4,7 @@ Figure 1 shows the 3D models of FRED rendered in TinkerCad. Item (1) shows the 3
 
 It is important to note that in this directory there are two head models (FRED and Frida) that differ only in the size of the ears and there are two chest models (FRED and Frida). There is also a model for the 3D piece used on the female head to attach Frida's bows.
 
-If you want to customize any element or use these models as a basis for your project, you can access them through this <a href="https://www.tinkercad.com/things/dGqDeysEWR8-copy-of-projeto-fred-versao-2023/edit">link</a>.
+If you want to customize any element or use these models as a basis for your project, you can access them through this <a href="https://www.tinkercad.com/things/dGqDeysEWR8-copy-of-projeto-fred-versao-2023/edit" target="_blank">link</a>.
 
 </br>
 <p align="center">
