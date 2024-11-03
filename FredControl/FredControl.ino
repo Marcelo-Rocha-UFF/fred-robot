@@ -3,8 +3,8 @@
 #include "LedControl.h"
 
 #include "FredSymbols.h" // All symbols definitions
-//#include "FredControlGirl.h" // Girl parameters
-#include "FredControlBoy.h" // Boy parameters
+#include "FredControlGirl.h" // Girl parameters
+//#include "FredControlBoy.h" // Boy parameters
 
 #define STATUS_FREE "ST:FREE   " // 10 bytes de tamanho
 #define STATUS_POSE "ST:POSE   "
@@ -19,8 +19,11 @@ char FOOT_RIGHT_PIN = 5;
 
 // Sensores de toque
 int TOUCH_HEAD_PIN = 7;
+int TOUCH_HEAD_VALUE = 0;
 int TOUCH_LEFT_PIN = 8;
+int TOUCH_LEFT_VALUE = 0;
 int TOUCH_RIGHT_PIN = 9;
+int TOUCH_RIGHT_VALUE = 0;
 
 // variaveis de estado do robô
 char veloc_srv = 40; // servo movement velocity
@@ -1095,40 +1098,48 @@ void processa_serial_port(){
 }
 
 void sense_touch(){
-    if (digitalRead(TOUCH_HEAD_PIN) == 1){
-    delay(5000);
-    if (digitalRead(TOUCH_HEAD_PIN) == 1){
-      expression_show(in_love); // Expression In love
-      pose_down('i'); // Pose down (broken) slow
-      rainbow(16, 'n'); // Arco Iris Effect 
-      delay(2000);
-      expression_show(neutral); // Expression Neutral
-      pose_init('1'); // Pose init (equilíbrio)
-      colorWipe(ring.Color(0, 0, 0), delay_leds, 'k'); // Black (off) 
-    }
+  if (digitalRead(TOUCH_HEAD_PIN) == 1)
+    TOUCH_HEAD_VALUE = TOUCH_HEAD_VALUE + 1;
+      delay(200);
+      
+  if (digitalRead(TOUCH_LEFT_PIN) == 1)
+    TOUCH_LEFT_VALUE = TOUCH_LEFT_VALUE + 1;
+      delay(100);
+
+  if (digitalRead(TOUCH_RIGHT_PIN) == 1)
+    TOUCH_RIGHT_VALUE = TOUCH_RIGHT_VALUE + 1;
+      delay(100);
+
+  if (TOUCH_HEAD_VALUE >=5){
+    expression_show(in_love); // Expression In love
+    pose_down('i'); // Pose down (broken) slow
+    rainbow(16, 'n'); // Arco Iris Effect 
+    delay(2000);
+    expression_show(neutral); // Expression Neutral
+    pose_init('1'); // Pose init (equilíbrio)
+    colorWipe(ring.Color(0, 0, 0), delay_leds, 'k'); // Black (off) 
+    TOUCH_HEAD_VALUE = 0;
   }
-    if (digitalRead(TOUCH_LEFT_PIN) == 1){
-    delay(5000);
-    if (digitalRead(TOUCH_LEFT_PIN) == 1){
-      expression_show(happy); // Expression Happy
-      pose_up('L'); // Pose up (left foot2)
-      colorWipe(ring.Color(0, 255, 0), delay_leds, 'g'); // Green Happy
-      delay(5000);
-      expression_show(neutral); // Expression Neutral
-      pose_init('1'); // Pose init (equilíbrio)
-      colorWipe(ring.Color(0, 0, 0), delay_leds, 'k'); // Black (off) 
-    }
+
+  if (TOUCH_LEFT_VALUE >=2){
+    expression_show(happy); // Expression Happy
+    pose_up('L'); // Pose up (left foot2)
+    colorWipe(ring.Color(0, 255, 0), delay_leds, 'g'); // Green Happy
+    delay(3000);
+    expression_show(neutral); // Expression Neutral
+    pose_init('1'); // Pose init (equilíbrio)
+    colorWipe(ring.Color(0, 0, 0), delay_leds, 'k'); // Black (off) 
+    TOUCH_LEFT_VALUE = 0;
   }
-  if (digitalRead(TOUCH_RIGHT_PIN) == 1){
-    delay(5000);
-    if (digitalRead(TOUCH_RIGHT_PIN) == 1){
-      expression_show(happy); // Expression Happy
-      pose_up('R'); // Pose up (right foot2)
-      colorWipe(ring.Color(0, 255, 0), delay_leds, 'g'); // Green Happy
-      delay(5000);
-      expression_show(neutral); // Expression Neutral
-      pose_init('1'); // Pose init (equilíbrio)
-      colorWipe(ring.Color(0, 0, 0), delay_leds, 'k'); // Black (off) 
-    }
+
+  if (TOUCH_RIGHT_VALUE >=2){
+    expression_show(happy); // Expression Happy
+    pose_up('R'); // Pose up (right foot2)
+    colorWipe(ring.Color(0, 255, 0), delay_leds, 'g'); // Green Happy
+    delay(3000);
+    expression_show(neutral); // Expression Neutral
+    pose_init('1'); // Pose init (equilíbrio)
+    colorWipe(ring.Color(0, 0, 0), delay_leds, 'k'); // Black (off) 
+    TOUCH_RIGHT_VALUE = 0;
   }
 }
