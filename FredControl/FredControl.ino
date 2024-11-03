@@ -17,6 +17,10 @@ char FOOT_LEFT_PIN = 3;
 char LEG_RIGHT_PIN = 4;
 char FOOT_RIGHT_PIN = 5;
 
+// Sensores de toque
+int TOUCH_HEAD_PIN = 7;
+int TOUCH_LEFT_PIN = 8;
+int TOUCH_RIGHT_PIN = 9;
 
 // variaveis de estado do robô
 char veloc_srv = 40; // servo movement velocity
@@ -74,7 +78,11 @@ Adafruit_NeoPixel ring = Adafruit_NeoPixel(16, PIN, NEO_GRB + NEO_KHZ800);
 void setup() {
 
   Serial.begin(9600);
-  
+
+  pinMode(TOUCH_HEAD_PIN, INPUT);
+  pinMode(TOUCH_LEFT_PIN, INPUT);
+  pinMode(TOUCH_RIGHT_PIN, INPUT);
+
   fred.right_eye = fr;
   fred.left_eye = ed;
   fred.mouth = heart;
@@ -164,6 +172,7 @@ void run(){
     processa_serial_port(); // 
     blinking_eyes(); // pisca olhos aleatoreamente
     anim_feet(); // move os pés do FRED aleatoreamente
+    sense_touch(); // Verifica se o robo foi tocado e muda o seu estado, executando a animaçao
   }
 }
 
@@ -1081,6 +1090,45 @@ void processa_serial_port(){
     if (func == 's'){
       char param =Serial.read();
       if (param == 't') show_status();
+    }
+  }
+}
+
+void sense_touch(){
+    if (digitalRead(TOUCH_HEAD_PIN) == 1){
+    delay(5000);
+    if (digitalRead(TOUCH_HEAD_PIN) == 1){
+      expression_show(in_love); // Expression In love
+      pose_down('i'); // Pose down (broken) slow
+      rainbow(16, 'n'); // Arco Iris Effect 
+      delay(2000);
+      expression_show(neutral); // Expression Neutral
+      pose_init('1'); // Pose init (equilíbrio)
+      colorWipe(ring.Color(0, 0, 0), delay_leds, 'k'); // Black (off) 
+    }
+  }
+    if (digitalRead(TOUCH_LEFT_PIN) == 1){
+    delay(5000);
+    if (digitalRead(TOUCH_LEFT_PIN) == 1){
+      expression_show(happy); // Expression Happy
+      pose_up('L'); // Pose up (left foot2)
+      colorWipe(ring.Color(0, 255, 0), delay_leds, 'g'); // Green Happy
+      delay(5000);
+      expression_show(neutral); // Expression Neutral
+      pose_init('1'); // Pose init (equilíbrio)
+      colorWipe(ring.Color(0, 0, 0), delay_leds, 'k'); // Black (off) 
+    }
+  }
+  if (digitalRead(TOUCH_RIGHT_PIN) == 1){
+    delay(5000);
+    if (digitalRead(TOUCH_RIGHT_PIN) == 1){
+      expression_show(happy); // Expression Happy
+      pose_up('R'); // Pose up (right foot2)
+      colorWipe(ring.Color(0, 255, 0), delay_leds, 'g'); // Green Happy
+      delay(5000);
+      expression_show(neutral); // Expression Neutral
+      pose_init('1'); // Pose init (equilíbrio)
+      colorWipe(ring.Color(0, 0, 0), delay_leds, 'k'); // Black (off) 
     }
   }
 }
