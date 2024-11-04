@@ -3,8 +3,8 @@
 #include "LedControl.h"
 
 #include "FredSymbols.h" // All symbols definitions
-#include "FredControlGirl.h" // Girl parameters
-//#include "FredControlBoy.h" // Boy parameters
+//#include "FredControlGirl.h" // Girl parameters
+#include "FredControlBoy.h" // Boy parameters
 
 #define STATUS_FREE "ST:FREE   " // 10 bytes de tamanho
 #define STATUS_POSE "ST:POSE   "
