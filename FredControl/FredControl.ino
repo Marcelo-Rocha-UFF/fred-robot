@@ -805,7 +805,6 @@ void speech_anim(char command){
   if ((command == 'T') && (state_expression != 'T')){ //
     if (state_expression != 'C') state_exp_aux = state_expression; // salva estado atual
     state_expression = 'T';
-    Serial.print(state_expression); //////////////////////////////////////
     led_speech_mills = millis(); // incializa o contador para o efeito dos LEDS
     delay(100); // o modulo de audio do ROS tem uma latencia de ~= 700ms
     bool led_type = false; //variavel booleana usada na alternacia na animação dos LEDs RGB
@@ -859,8 +858,6 @@ void speech_anim(char command){
       colorWipe(cor_anim, 0, state_led); // restaura a cor dos LEDs
     }
     state_expression = 'C';
-    Serial.print(state_expression); //////////////////////////////////////
-    
     led_speech_mills = millis(); // incializa o contador para o efeito dos LEDS
     delay(100); // o modulo de audio do ROS tem uma latencia de ~= 700ms
     bool led_type = false; //variavel booleana usada na alternacia na animação dos LEDs RGB
@@ -884,7 +881,6 @@ void speech_anim(char command){
    }
    else if ((command == 't') || (command == 'c')) { // 't' or 'c'
     if (state_expression == 'T') {
-      Serial.println("Aqui");
       if (state_led == 'k') cor_anim = ring.Color(0, 0, 0); // caso especial
       state_expression = state_exp_aux; // restaura para o estado anterior  
       if (state_expression == 'f') expression_show(fred);
