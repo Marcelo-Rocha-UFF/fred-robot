@@ -29,6 +29,7 @@ int TOUCH_RIGHT_VALUE = 0;
 char veloc_srv = 40; // servo movement velocity
 char state_pose = NULL; // estado da posição inicial
 char state_expression = NULL; // estado da expressão (display) inicial
+char state_exp_aux = NULL; // variavel mantem seu estado mesmo depois da funcao terminar
 char state_led = NULL; // estado do anel de leds
 
 unsigned long eye_blinking_mills = millis(); // eye blinking
@@ -183,7 +184,11 @@ void run(){
 ///////////////////////////////////////////////////////////////// Funções para os LEDs RGB ////////////////////////////////////////
 // Fill the dots one after the other with a color
 void colorWipe(uint32_t c, uint8_t wait, char type) {
-  if (state_expression != 'T') {
+  if (state_expression == 'T') {
+    state_led = type;
+    servos_attach();
+  }
+  else {
     servos_detach();
     delay(1); // evita o truncamento no envio pela porta serial
     //Serial.print(STATUS_LEDS);
@@ -795,11 +800,12 @@ void show_status(){
 /////////////////////////////////////////////////////////////// Funções de controle de ANIMAÇÕES ////////////////////////////////////////
 //animacao da boca falando
 void speech_anim(char command){
-  static char state_exp_aux; // variavel mantem seu estado mesmo depois da funcao terminar
+  // 
   static uint32_t cor_anim;
   if ((command == 'T') && (state_expression != 'T')){ //
-    state_exp_aux = state_expression; // salva estado atual
+    if (state_expression != 'C') state_exp_aux = state_expression; // salva estado atual
     state_expression = 'T';
+    Serial.print(state_expression); //////////////////////////////////////
     led_speech_mills = millis(); // incializa o contador para o efeito dos LEDS
     delay(100); // o modulo de audio do ROS tem uma latencia de ~= 700ms
     bool led_type = false; //variavel booleana usada na alternacia na animação dos LEDs RGB
@@ -842,51 +848,61 @@ void speech_anim(char command){
       processa_serial_port();
       anim_feet(); // move os pés do FRED aleatoreamente
     }
-  } else if (command == 't'){ // 't'
-      state_expression = state_exp_aux; // restaura para o estado anterior     
-      if (state_expression == 'f') expression_show(fred);
-      else if (state_expression == 'i') expression_show(in_love);
-      else if (state_expression == 'b') expression_show(broken);
-      else if (state_expression == 'n') expression_show(neutral);
-      else if (state_expression == 'p') expression_show(pleased); 
-      else if (state_expression == 'h') expression_show(happy); 
-      else if (state_expression == 's') expression_show(sad); 
-      else if (state_expression == 'a') expression_show(angry);
-      else if (state_expression == 'A') expression_show(angry2);
-      else if (state_expression == 'u') expression_show(surprised2); // ficou definido que após a fala, a exp. de surprised fica com boca "neutral" usando a struct "surprised2"
-      else if (state_expression == 'r') expression_show(afraid);
-      if (state_led == 'k') cor_anim = ring.Color(0, 0, 0); // caso especial
-      colorWipe(cor_anim, delay_leds, state_led); // restaura a cor dos LEDs
-      servos_attach();
-    }
-
-      // Mouth animatiom without leds animation
-     else if ((command == 'C') && (state_expression != 'C')){ //
+  } 
+  // Mouth animatiom without leds animation
+  else if ((command == 'C') && (state_expression != 'C')){ //
+    if (state_expression != 'T') {
       state_exp_aux = state_expression; // salva estado atual
+    } else {
+      if (state_led == 'k') cor_anim = ring.Color(0, 0, 0); // caso especial
       state_expression = 'C';
-      led_speech_mills = millis(); // incializa o contador para o efeito dos LEDS
-      delay(100); // o modulo de audio do ROS tem uma latencia de ~= 700ms
-      bool led_type = false; //variavel booleana usada na alternacia na animação dos LEDs RGB
-      while(state_expression == 'C'){
-        // animação da boca
-        if (random(1, 4) == 1) {
-          matrix2_write(m_open);
-          delay(random(50, 150));
-        } else if (random(1, 4) == 2) {
-          matrix2_write(m_mid);
-          delay(random(50, 150));
-        }
-        else if (random(1, 4) == 3) {
-          matrix2_write(m_close);
-          delay(random(100, 200));
-        }
-        blinking_eyes();
-        processa_serial_port();
-        anim_feet(); // move os pés do FRED aleatoreamente
-      }
+      colorWipe(cor_anim, 0, state_led); // restaura a cor dos LEDs
     }
-    else if (command == 'c'){ // 't'
-      state_expression = state_exp_aux; // restaura para o estado anterior     
+    state_expression = 'C';
+    Serial.print(state_expression); //////////////////////////////////////
+    
+    led_speech_mills = millis(); // incializa o contador para o efeito dos LEDS
+    delay(100); // o modulo de audio do ROS tem uma latencia de ~= 700ms
+    bool led_type = false; //variavel booleana usada na alternacia na animação dos LEDs RGB
+    while(state_expression == 'C'){
+      // animação da boca
+      if (random(1, 4) == 1) {
+        matrix2_write(m_open);
+        delay(random(50, 150));
+      } else if (random(1, 4) == 2) {
+        matrix2_write(m_mid);
+        delay(random(50, 150));
+      }
+      else if (random(1, 4) == 3) {
+        matrix2_write(m_close);
+        delay(random(100, 200));
+      }
+      blinking_eyes();
+      processa_serial_port();
+      anim_feet(); // move os pés do FRED aleatoreamente
+     }
+   }
+   else if ((command == 't') || (command == 'c')) { // 't' or 'c'
+    if (state_expression == 'T') {
+      Serial.println("Aqui");
+      if (state_led == 'k') cor_anim = ring.Color(0, 0, 0); // caso especial
+      state_expression = state_exp_aux; // restaura para o estado anterior  
+      if (state_expression == 'f') expression_show(fred);
+      else if (state_expression == 'i') expression_show(in_love);
+      else if (state_expression == 'b') expression_show(broken);
+      else if (state_expression == 'n') expression_show(neutral);
+      else if (state_expression == 'p') expression_show(pleased); 
+      else if (state_expression == 'h') expression_show(happy); 
+      else if (state_expression == 's') expression_show(sad); 
+      else if (state_expression == 'a') expression_show(angry);
+      else if (state_expression == 'A') expression_show(angry2);
+      else if (state_expression == 'u') expression_show(surprised2); // ficou definido que após a fala, a exp. de surprised fica com boca "neutral" usando a struct "surprised2"
+      else if (state_expression == 'r') expression_show(afraid);
+      colorWipe(cor_anim, delay_leds, state_led); // restaura a cor dos LEDs
+      servos_attach(); 
+    }
+    else if (state_expression == 'C') {
+      state_expression = state_exp_aux; // restaura para o estado anterior  
       if (state_expression == 'f') expression_show(fred);
       else if (state_expression == 'i') expression_show(in_love);
       else if (state_expression == 'b') expression_show(broken);
@@ -899,9 +915,9 @@ void speech_anim(char command){
       else if (state_expression == 'u') expression_show(surprised2); // ficou definido que após a fala, a exp. de surprised fica com boca "neutral" usando a struct "surprised2"
       else if (state_expression == 'r') expression_show(afraid);
       servos_attach();
-      //run(); 
     }
   }
+}
 
 
 /// pisca olhos do FRED
@@ -1002,6 +1018,7 @@ void processa_serial_port(){
     /////////////////////////////////// comandos para controlar os LEDs RGB do tórax do robô ///////////////////////////
     if (func == 'l'){ // led
       int efx =Serial.read(); // lê o parâmentro (efx)
+      if ((state_expression == 'T') || (state_expression == 'C')) delay_leds = 0; // When speeching, leds should change fast!
       if (efx == 'r') colorWipe(ring.Color(255, 0, 0), delay_leds, efx); // Angry Red   
       if (efx == 'b') colorWipe(ring.Color(0, 0, 255), delay_leds, efx); // Sad Blue 
       if (efx == 'g') colorWipe(ring.Color(0, 255, 0), delay_leds, efx); // Green Happy
@@ -1021,21 +1038,66 @@ void processa_serial_port(){
     ///////////////////////////////////// comandos para controlar as expressões faciais do robô ///////////////////////////
     if (func == 'e'){
       char param =Serial.read();
-      if (param == 'f') expression_show(fred); // Expression Fred and Heart (Greetings)
-      else if (param == 'i') expression_show(in_love); // Expression In love
-      else if (param == 'b') expression_show(broken); // Expression Broken
-      else if (param == 'n') expression_show(neutral); // Expression Neutral
-      else if (param == 'p') expression_show(pleased); // Expression Pleased
-      else if (param == 'h') expression_show(happy); // Expression Happy
-      else if (param == 's') expression_show(sad); // Expression Sad
-      else if (param == 'a') expression_show(angry); // Expression Angry
-      else if (param == 'A') expression_show(angry2); // Expression Angry2
-      else if (param == 'u') expression_show(surprised); // Expression Surprised
-      else if (param == 'r') expression_show(afraid); // Expression Afraid
-      else if (param == 't') speech_anim(param); // Speech mouth animation stop with led animatiom
-      else if (param == 'T') speech_anim(param); // Speech mouth animation start with led animatiom
-      else if (param == 'c') speech_anim(param); // Speech mouth animation stop  without led animatiom
-      else if (param == 'C') speech_anim(param); // Speech mouth animation start  without led animatiom
+      if (param == 'f') {
+        expression_show(fred); // Expression Fred and Heart (Greetings)
+        state_exp_aux = 'f';
+      }
+      else if (param == 'i') {
+        expression_show(in_love); // Expression In love
+        state_exp_aux = 'i';
+      }
+      else if (param == 'b') {
+        expression_show(broken); // Expression Broken
+        state_exp_aux = 'b';
+      }
+      else if (param == 'n') {
+        expression_show(neutral); // Expression Neutral
+        state_exp_aux = 'n';
+      }
+      else if (param == 'p') {
+        expression_show(pleased); // Expression Pleased
+        state_exp_aux = 'p';
+      }
+      else if (param == 'h') {
+        expression_show(happy); // Expression Happy
+        state_exp_aux = 'h';
+      }
+      else if (param == 's') {
+        expression_show(sad); // Expression Sad
+        state_exp_aux = 's';
+      }
+      else if (param == 'a') {
+        expression_show(angry); // Expression Angry
+        state_exp_aux = 'a';
+      }
+      else if (param == 'A') {
+        expression_show(angry2); // Expression Angry2
+        state_exp_aux = 'A';
+      }
+      else if (param == 'u') {
+        expression_show(surprised); // Expression Surprised
+        state_exp_aux = 'u';
+      }
+      else if (param == 'r') {
+        expression_show(afraid); // Expression Afraid
+        state_exp_aux = 'r';
+      }
+      else if (param == 't') {
+        speech_anim(param); // Speech mouth animation stop with led animatiom
+        state_exp_aux = 't';
+      }
+      else if (param == 'T') {
+        speech_anim(param); // Speech mouth animation start with led animatiom
+        state_exp_aux = 'T';
+      }
+      else if (param == 'c') {
+        speech_anim(param); // Speech mouth animation stop  without led animatiom
+        state_exp_aux = 'c';
+      }
+      else if (param == 'C') {
+        speech_anim(param); // Speech mouth animation start  without led animatiom
+        state_exp_aux = 'C';
+      }
     } else
 
     ///////////////////////////////////// comandos para controlar os MOVIMENTOS do robô ///////////////////////////
