@@ -1,11 +1,5 @@
 ## FRED Robot - Affective Expressions Evaluation (Video Links)
 
-</br></br>
-<p align="center">
-<img src="fred.png" width="220"> </br></br>
-<strong>Figure 1.</strong> FRED Robot - A Friendly Robot for EDucation and Healthcare.
-</p>
-
 Links to the video with the dialogue between the robots FRED and Frida. Full video and by blocks.
 
 Complete Video - <a href="https://drive.google.com/file/d/1vOuh0eGln9m-aqgXgKBmEmnBJmg0baSG/view" target="_blank">https://drive.google.com/file/d/1vOuh0eGln9m-aqgXgKBmEmnBJmg0baSG/view</a>.
