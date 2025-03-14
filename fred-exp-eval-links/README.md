@@ -2,7 +2,7 @@
 
 </br></br>
 <p align="center">
-<img src="fred.png" width="120"> </br></br>
+<img src="fred.png" width="220"> </br></br>
 <strong>Figure 1.</strong> FRED Robot - A Friendly Robot for EDucation and Healthcare.
 </p>
 
