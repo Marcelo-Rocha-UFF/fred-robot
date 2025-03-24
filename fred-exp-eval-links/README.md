@@ -12,6 +12,6 @@ Video Block 3 - <a href="https://drive.google.com/file/d/1kJucT7g66etR7L17el2kjX
 
 Video Block 4 - <a href="https://drive.google.com/file/d/1OveKEnLAxhkBeYY3cfjcOM4TK0wYmNGx/view?usp=sharing" target="_blank">https://drive.google.com/file/d/1OveKEnLAxhkBeYY3cfjcOM4TK0wYmNGx/view?usp=sharing</a>.
 
-Video Block 5 - <a href="https://bit.ly/3DC9JZY" target="_blank">https://bit.ly/3DC9JZY</a>.
+Video Block 5 - <a href="https://drive.google.com/file/d/1Opa8ckXP-JGu9QBbimEk2YqrqhGBu6S5/view?usp=sharing" target="_blank">https://drive.google.com/file/d/1Opa8ckXP-JGu9QBbimEk2YqrqhGBu6S5/view?usp=sharing</a>.
 
-Video Block 6 - <a href="https://bit.ly/4a0R7Px" target="_blank">https://bit.ly/4a0R7Px</a>.
+Video Block 6 - <a href="https://drive.google.com/file/d/1wKvsE703i596QsBOJg96iKeFG27jNnP2/view?usp=sharing" target="_blank">https://drive.google.com/file/d/1wKvsE703i596QsBOJg96iKeFG27jNnP2/view?usp=sharing</a>.
