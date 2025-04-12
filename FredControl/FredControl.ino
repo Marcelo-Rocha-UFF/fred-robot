@@ -1,7 +1,7 @@
 #include <VarSpeedServo.h>
 #include <Adafruit_NeoPixel.h>
 #include "LedControl.h"
-
+ 
 #include "FredSymbols.h" // All symbols definitions
 // #include "FredControlGirl.h" // Girl parameters
 #include "FredControlBoy.h" // Boy parameters
